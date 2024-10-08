@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View,Image } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { dishDetail } from './type';
 import { useState } from 'react';
@@ -50,10 +50,7 @@ export default function App() {
       <View style={styles.orderContainer}>
         <Text style={styles.orderHeading}>TODAY'S ORDER</Text>
         <View>
-          <View>
           <Text style={styles.orderText}>Total Dishes: {totalDishes}</Text>
-        </View>
-        <Image source={require('./Image/Hat.jpg')}></Image>
         </View>
       </View>
 
@@ -207,12 +204,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#5B3E96',
-  },
-  Image: {
-    width: -60,
-    height: -60,
-    marginLeft:-25,
-    marginTop:-60,
-    marginStart:-25,
   }
 });
