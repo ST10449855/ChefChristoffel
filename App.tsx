@@ -13,8 +13,7 @@ export default function App() {
 
   const[Dishes, setWorkouts] = useState<dishDetail[]>([]);
 
-  const[totalCalories, setTotalCalories] = useState<number>(0);
-  const totalWorkOuts = Dishes.length;
+  const totalDishes = Dishes.length;
 
   const CourseType = ['Main Course','Starter','Dessert']
 
@@ -27,7 +26,6 @@ export default function App() {
     price: parseInt(price)
   };
     setWorkouts([...Dishes, newdish]);
-    setTotalCalories(totalCalories + newdish.price);
     setDishName('');
     setDescription('');
     setCourseType('');
@@ -45,8 +43,7 @@ export default function App() {
       <View style={styles.orderContainer}>
         <Text style={styles.orderHeading}>TODAYS ORDER</Text>
         <View>
-          <Text style={styles.orderText}>Total workouts: {totalWorkOuts}</Text>
-          <Text style={styles.orderText}>Total calories: {totalCalories}</Text>
+          <Text style={styles.orderText}>Total Orders: {totalDishes}</Text>
         </View>
 
       </View>
