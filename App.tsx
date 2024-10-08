@@ -1,71 +1,70 @@
 import { StatusBar } from 'expo-status-bar';
-import {FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import {Picker} from "@react-native-picker/picker";
-import { dishDetail } from './type'; // Assuming 'dishDetail' type is defined elsewhere
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View,Image } from 'react-native';
+import { Picker } from "@react-native-picker/picker";
+import { dishDetail } from './type';
 import { useState } from 'react';
 
 export default function App() {
 
-  // States to store form input data
-  const [dishName, setDishName] = useState<string>(''); // Stores the dish name
-  const [description, setDescription] = useState<string>(''); // Stores the dish description
-  const [courseType, setCourseType] = useState<string>(''); // Stores the selected course type
-  const [price, setPrice] = useState<string>(''); // Stores the dish price (as string initially)
-
-  // State to store the list of dishes
+  // State hooks for user inputs and list of dishes
+  const [dishName, setDishName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [courseType, setCourseType] = useState<string>('Main Course');
+  const [price, setPrice] = useState<string>('');
   const [Dishes, setWorkouts] = useState<dishDetail[]>([]);
 
-  // Variable to count the total number of dishes
+  // Get total number of dishes
   const totalDishes = Dishes.length;
 
-  // Array of course types for the picker
+  // List of course types for the picker
   const CourseType = ['Main Course', 'Starter', 'Dessert'];
 
-  // Function to handle form submission
+  // Handler for submitting a new dish
   const handleSubmit = () => {
-
-    // Create a new dish object from input data
+    // Creating a new dish object based on user inputs
     const newdish: dishDetail = {
       dish_Name: dishName,
       description: description,
       course_Type: courseType,
-      price: parseInt(price), // Convert price from string to integer
+      price: parseInt(price)
     };
 
-    // Update the Dishes state with the new dish
+    // Adding the new dish to the list of dishes
     setWorkouts([...Dishes, newdish]);
 
-    // Clear the input fields after submission
+    // Clearing input fields
     setDishName('');
     setDescription('');
-    setCourseType('');
+    setCourseType('Main Course');
     setPrice('');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* App header */}
+      {/* Header */}
       <View style={styles.headingContainer}>
         <Text style={styles.trackerName}>The Menu</Text>
       </View>
-      
-      {/* Order summary container */}
+
+      {/* Order Summary */}
       <View style={styles.orderContainer}>
         <Text style={styles.orderHeading}>TODAY'S ORDER</Text>
         <View>
-          <Text style={styles.orderText}>Total Dishes: {totalDishes}</Text> {/* Displays the number of dishes */}
+          <View>
+          <Text style={styles.orderText}>Total Dishes: {totalDishes}</Text>
+        </View>
+        <Image source={require('./Image/Hat.jpg')}></Image>
         </View>
       </View>
 
-      {/* List of added dishes */}
+      {/* Dish List */}
       <View style={styles.listView}>
         <FlatList
           style={styles.listStyle}
-          data={Dishes} // Passes the list of dishes to FlatList
-          keyExtractor={(item, index) => index.toString()} // Uses index as the key
+          data={Dishes}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <View style={styles.itemContainer}>
-              {/* Display dish details */}
               <Text style={styles.detailText}>Dish Name: {item.dish_Name}</Text>
               <Text style={styles.detailText}>Description: {item.description}</Text>
               <Text style={styles.detailText}>Course: {item.course_Type}</Text>
@@ -75,66 +74,56 @@ export default function App() {
         />
       </View>
 
-      {/* User input form */}
+      {/* User Input Form */}
       <View style={styles.userInputView}>
-        {/* Dish name input */}
         <TextInput
           style={styles.input}
           placeholder="Dish name"
           value={dishName}
           onChangeText={setDishName}
         />
-
-        {/* Description input */}
         <TextInput
           style={styles.input}
           placeholder="Description"
           value={description}
           onChangeText={setDescription}
         />
-
-        {/* Course type picker */}
         <Picker
           style={styles.input}
           selectedValue={courseType}
           onValueChange={(itemValue) => setCourseType(itemValue)}
         >
           {CourseType.map((courseType) => (
-            <Picker.Item label={courseType} value={courseType} key={courseType} /> // Populates the picker with course types
+            <Picker.Item label={courseType} value={courseType} key={courseType} />
           ))}
         </Picker>
-
-        {/* Price input */}
         <TextInput
           style={styles.input}
           placeholder="Price"
-          keyboardType="numeric" // Ensures the keyboard is numeric
           value={price}
           onChangeText={setPrice}
+          keyboardType="numeric" // Optional: To open numeric keyboard for price input
         />
-
-        {/* Save button */}
         <TouchableHighlight style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
       </View>
-
     </SafeAreaView>
   );
 }
 
-// Styles for the components
+// Styles for the app components
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#faebd7',
   },
   headingContainer: {
-    backgroundColor: '#BDB5D5',
+    backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 100,
+    marginBottom: 50,
     width: '100%',
   },
   trackerName: {
@@ -165,16 +154,16 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    marginVertical: 10,
     borderRadius: 5,
     color: 'black',
+    marginTop: 20,
     fontSize: 20,
   },
   button: {
     backgroundColor: '#fff',
     paddingVertical: 15,
     paddingHorizontal: 40,
-    borderRadius: 40, // For rounded corners
+    borderRadius: 40,
     marginVertical: 10,
     alignItems: 'center',
     marginTop: 40,
@@ -203,10 +192,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   orderContainer: {
-    backgroundColor: 'lightgreen', // Changed to valid color
+    backgroundColor: 'green',
     padding: 15,
     borderRadius: 10,
-    marginTop: -80,
     alignItems: 'flex-start',
   },
   orderHeading: {
@@ -220,4 +208,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#5B3E96',
   },
+  Image: {
+    width: -60,
+    height: -60,
+    marginLeft:-25,
+    marginTop:-60,
+    marginStart:-25,
+  }
 });
