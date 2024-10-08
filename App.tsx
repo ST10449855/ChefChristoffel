@@ -13,15 +13,59 @@ export default function App() {
 
   const[workouts, setWorkouts] = useState<WorkoutDetail[]>([]);
 
+  const[totalCalories, setTotalCalories] = useState<number>(0);
+  const totalWorkOuts = workouts.length;
+
   const ExcerciseType = ['Çardio','Strength','Felxibilty','Balance','HIIT']
+
+  const handleSubmit = () => {
+
+  const newworkout: WorkoutDetail = {
+    workout_Name : workOutName,
+    duration: parseInt(duration),
+    excercise_Type:excerciseType,
+    calories: parseInt(calories)
+  };
+    setWorkouts([...workouts, newworkout]);
+    setTotalCalories(totalCalories + newworkout.calories);
+    setWorkOutName('');
+    setDuration('');
+    setExerciseType('');
+    setCalories('');
+
+}
+
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingContainer}>
         <Text style={styles.trackerName}>The Menu</Text>
       </View>
+      
+      <View style={styles.orderContainer}>
+        <Text style={styles.orderHeading}>TODAYS ORDER</Text>
+        <View>
+          <Text style={styles.orderText}>Total workouts: {totalWorkOuts}</Text>
+          <Text style={styles.orderText}>Total calories: {totalCalories}</Text>
+        </View>
+
+      </View>
+    
 
     <View style={styles.listView}>
+      <FlatList style = {styles.listStyle}
+      data={workouts}
+      keyExtractor={(item,index) => index.toString()}
+      renderItem={({item}) =>(
+        <View style={styles.itemContainer}>
+          <Text style={styles.detailText}>workout Name: {item.workout_Name}</Text>
+          <Text style={styles.detailText}>Duration: {item.duration}</Text>
+          <Text style={styles.detailText}>Workout Type: {item.excercise_Type}</Text>
+          <Text style={styles.detailText}> Calorise Burnt: {item.calories}</Text>
+        </View>
+      )}>
 
+      </FlatList>
     </View>
 
     <View style={styles.userInputView}>
@@ -40,7 +84,7 @@ export default function App() {
   
       <TextInput style={styles.input} placeholder="Calories"></TextInput>
 
-      <TouchableHighlight style={styles.button}>
+      <TouchableHighlight style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Save</Text>
       </TouchableHighlight>
     </View>
@@ -69,9 +113,9 @@ const styles = StyleSheet.create({
     color:'#5B3E96'
   },
   listView:{
-    marginTop: -60,
+    marginTop: 20,
     width: '100%',
-    height: 550,
+    height: 450,
     borderRadius:10,
     backgroundColor: '#ECECEC',
   },
@@ -110,5 +154,42 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  listStyle:{
+    maxHeight:800,
+  },
+  itemContainer:{
+    flex: 1,
+    width: 540,
+    backgroundColor: '#BDB5D5',
+    alignItems: 'center',
+    justifyContent:'space-around',
+    marginVertical: 10,
+    borderRadius: 10,
+  },
+  detailText:{
+    color:'#5B3E96',
+    fontSize:20,
+    fontWeight: 'bold',
+  },
+  orderContainer:{
+    backgroundColor: 'light green',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: -80,
+    alignItems: 'flex-start',
+  },
+  orderHeading:{
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 10,
+
+  },
+  orderText:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#5B3E96',
   }
+
 });
