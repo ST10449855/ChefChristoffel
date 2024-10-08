@@ -1,37 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
 import {FlatList, SafeAreaView, StyleSheet, Text,TextInput,TouchableHighlight, View } from 'react-native';
 import {Picker} from "@react-native-picker/picker";
-import { WorkoutDetail } from './type';
+import { dishDetail } from './type';
 import { useState } from 'react';
 
 export default function App() {
 
-  const [workOutName, setWorkOutName] = useState<string>('');
-  const [duration, setDuration] = useState<string>('');
-  const [excerciseType, setExerciseType] = useState<string>('');
-  const [calories, setCalories] = useState<string>('');
+  const [dishName, setDishName] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [courseType, setCourseType] = useState<string>('');
+  const [price, setPrice] = useState<string>('');
 
-  const[workouts, setWorkouts] = useState<WorkoutDetail[]>([]);
+  const[Dishes, setWorkouts] = useState<dishDetail[]>([]);
 
   const[totalCalories, setTotalCalories] = useState<number>(0);
-  const totalWorkOuts = workouts.length;
+  const totalWorkOuts = Dishes.length;
 
-  const ExcerciseType = ['Çardio','Strength','Felxibilty','Balance','HIIT']
+  const CourseType = ['Main Course','Starter','Dessert']
 
   const handleSubmit = () => {
 
-  const newworkout: WorkoutDetail = {
-    workout_Name : workOutName,
-    duration: parseInt(duration),
-    excercise_Type:excerciseType,
-    calories: parseInt(calories)
+  const newdish: dishDetail = {
+    dish_Name : dishName,
+    description: description,
+    course_Type:courseType,
+    price: parseInt(price)
   };
-    setWorkouts([...workouts, newworkout]);
-    setTotalCalories(totalCalories + newworkout.calories);
-    setWorkOutName('');
-    setDuration('');
-    setExerciseType('');
-    setCalories('');
+    setWorkouts([...Dishes, newdish]);
+    setTotalCalories(totalCalories + newdish.price);
+    setDishName('');
+    setDescription('');
+    setCourseType('');
+    setPrice('');
 
 }
 
@@ -54,14 +54,14 @@ export default function App() {
 
     <View style={styles.listView}>
       <FlatList style = {styles.listStyle}
-      data={workouts}
+      data={Dishes}
       keyExtractor={(item,index) => index.toString()}
       renderItem={({item}) =>(
         <View style={styles.itemContainer}>
-          <Text style={styles.detailText}>workout Name: {item.workout_Name}</Text>
-          <Text style={styles.detailText}>Duration: {item.duration}</Text>
-          <Text style={styles.detailText}>Workout Type: {item.excercise_Type}</Text>
-          <Text style={styles.detailText}> Calorise Burnt: {item.calories}</Text>
+          <Text style={styles.detailText}>Dish Name: {item.dish_Name}</Text>
+          <Text style={styles.detailText}>Description : {item.description}</Text>
+          <Text style={styles.detailText}>Course : {item.course_Type}</Text>
+          <Text style={styles.detailText}> Price: {item.price}</Text>
         </View>
       )}>
 
@@ -69,20 +69,20 @@ export default function App() {
     </View>
 
     <View style={styles.userInputView}>
-      <TextInput style={styles.input} placeholder="Workout name" value={workOutName} onChangeText={setWorkOutName}></TextInput>  
+      <TextInput style={styles.input} placeholder="Dish name" value={dishName} onChangeText={setDishName}></TextInput>  
 
-      <TextInput style={styles.input} placeholder="Duration (min)" value={duration} onChangeText={setDuration}></TextInput>
+      <TextInput style={styles.input} placeholder="Description" value={description} onChangeText={setDescription}></TextInput>
     
     <Picker style={styles.input}
-    selectedValue={excerciseType}
-    onValueChange={(itemValue) => setExerciseType(itemValue)}>
+    selectedValue={courseType}
+    onValueChange={(itemValue) => setCourseType(itemValue)}>
     
-    {ExcerciseType.map((excerciseType) => (
-      <Picker.Item label={excerciseType} value={excerciseType} key={excerciseType}/>
+    {CourseType.map((courseType) => (
+      <Picker.Item label={courseType} value={courseType} key={courseType}/>
     ))}
       </Picker>
   
-      <TextInput style={styles.input} placeholder="Calories"></TextInput>
+      <TextInput style={styles.input} placeholder="Price"></TextInput>
 
       <TouchableHighlight style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Save</Text>

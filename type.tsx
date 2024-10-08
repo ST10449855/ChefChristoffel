@@ -1,6 +1,6 @@
-export type WorkoutDetail = {
-    workout_Name: string;
-    duration: number;
-    excercise_Type: string;
-    calories: number;
+export type dishDetail = {
+    dish_Name: string;
+    description: string;
+    course_Type: string;
+    price: number;
 }
