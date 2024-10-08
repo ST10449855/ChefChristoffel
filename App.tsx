@@ -5,7 +5,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.headingContainer}>
-        <Text style={styles.container}>The Menu</Text>
+        <Text style={styles.trackerName}>The Menu</Text>
       </View>
 
     <View style={styles.listView}>
@@ -24,28 +24,33 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   headingContainer:{
-    backgroundColor: 'black',
+    backgroundColor: '#BDB5D5',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 100,
-    width: '100%'
+    width: '100%',
   },
   trackerName:{
     fontSize: 34,
     fontWeight: 'bold',
+    color:'#5B3E96'
   },
   listView:{
     marginTop: -60,
     width: '100%',
     height: 550,
     borderRadius:10,
-    backgroundColor: 'purple',
+    backgroundColor: '#ECECEC',
   },
   userImageView:{
     alignItems: 'center',
     justifyContent: 'flex-start',
     width: '100%',
     marginVertical: 5,
-    backgroundColor:'',
+    backgroundColor:'#CBC3E3',
+    padding: 15,
+    marginTop: 40,
+    marginBottom: 50,
+    borderRadius:10
   },
 });
