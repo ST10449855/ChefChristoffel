@@ -23,11 +23,6 @@ export default function App() {
 
   // Function to handle form submission
   const handleSubmit = () => {
-    // Validation to check if any field is empty
-    if (!dishName || !description || !courseType || !price) {
-      alert('Please fill in all the fields.'); // Alerts the user if any field is missing
-      return;
-    }
 
     // Create a new dish object from input data
     const newdish: dishDetail = {
